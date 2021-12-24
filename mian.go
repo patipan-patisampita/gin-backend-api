@@ -17,6 +17,6 @@ func SetupRouter() *gin.Engine {
 	apiV1 := router.Group("api/v1")
 
 	routes.InitHomeRoutes(apiV1)
-
+	routes.InitUserRoutes(apiV1)
 	return router
 }
