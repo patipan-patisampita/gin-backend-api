@@ -1,13 +1,22 @@
 package main
 
-import "github.com/gin-gonic/gin"
+import (
+	"os"
+
+	"github.com/gin-gonic/gin"
+	"github.com/patipan-patisampita/gin-backend-api/routes"
+)
 
 func main() {
-	r := gin.Default()
-	r.GET("/", func(c *gin.Context) {
-		c.JSON(200, gin.H{
-			"API VERSION": "1.0.0",
-		})
-	})
-	r.Run() //Listen and Server on 0.0.0.0:8080
+	router := SetupRouter()
+	router.Run(":" + os.Getenv("GO_PORT")) //Listen and Server on 0.0.0.0:8080
+}
+
+func SetupRouter() *gin.Engine {
+	router := gin.Default()
+	apiV1 := router.Group("api/v1")
+
+	routes.InitHomeRoutes(apiV1)
+
+	return router
 }
